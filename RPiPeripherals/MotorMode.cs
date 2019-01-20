@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace CarController
+namespace RPiPeripherals
 {
     public enum MotorMode
     {
-        Foreward,
+        Forward,
         Backward,
         Brake,
         Free

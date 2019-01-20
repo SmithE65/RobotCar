@@ -1,20 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using RPiPeripherals;
 
-namespace CarController
+namespace RPiPeripherals
 {
     public class Motor : IMotor
     {
-        private PCA9685 pwm;
-        private int pwmPin;
-        private int input1;
-        private int input2;
+        private readonly PCA9685 pwm;
+        private readonly int pwmPin;
+        private readonly int input1;
+        private readonly int input2;
 
         public Motor(MotorSettings settings)
         {
             // Check input
-            if (settings == null || settings.PwmController == null)
+            if (settings?.PwmController == null)
                 throw new ArgumentException("Settings object or PWM controller is null!");
             if (settings.PwmPin == settings.InputPin1 || settings.InputPin1 == settings.InputPin2 || settings.InputPin2 == settings.PwmPin)
                 throw new ArgumentException("Control pins must be unique!");
@@ -25,6 +26,8 @@ namespace CarController
             input2 = settings.InputPin2;
         }
 
+        #region IMotor implementation
+
         public void Set(double speed, MotorMode mode)
         {
             SetDirection(mode);
@@ -33,9 +36,9 @@ namespace CarController
 
         public void SetDirection(MotorMode mode)
         {
-            if (mode == MotorMode.Foreward)
+            if (mode == MotorMode.Forward)
             {
-                Console.WriteLine($"Setting pin {input1} high, pin {input2} low (foreward)");
+                Console.WriteLine($"Setting pin {input1} high, pin {input2} low (forward)");
                 pwm.SetPin(input1, 1.0);
                 pwm.SetPin(input2, 0.0);
             }
@@ -68,5 +71,8 @@ namespace CarController
             Console.WriteLine($"Setting pin {pwmPin} to {speed*100}% duty cycle");
             pwm.SetPin(pwmPin, speed);
         }
+
+        #endregion
+
     }
 }

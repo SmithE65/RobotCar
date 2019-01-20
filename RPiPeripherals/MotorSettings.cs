@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace CarController
+namespace RPiPeripherals
 {
     public class MotorSettings
     {

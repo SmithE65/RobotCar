@@ -3,7 +3,7 @@ using System.Device.I2c;
 using System.Device.I2c.Drivers;
 using System.Threading;
 
-namespace CarController
+namespace RPiPeripherals
 {
     public class PCA9685
     {

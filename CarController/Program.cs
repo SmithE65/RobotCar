@@ -5,40 +5,14 @@ using System.Device.I2c;
 using System.Device.I2c.Drivers;
 using System.Threading;
 
+using RPiPeripherals;
+
 namespace CarController
 {
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
-            Console.WriteLine("Initializing controller application...");
-
-            //var pin = 17;
-            //var lightTimeInMilliseconds = 1000;
-            //var dimTimeInMilliseconds = 200;
-
-            //Console.WriteLine($"Let's blink an LED!");
-            //using (GpioController controller = new GpioController())
-            //{
-            //    controller.OpenPin(pin, PinMode.Output);
-            //    Console.WriteLine($"GPIO pin enabled for use: {pin}");
-
-            //    Console.CancelKeyPress += (object sender, ConsoleCancelEventArgs eventArgs) =>
-            //    {
-            //        controller.Dispose();
-            //    };
-
-            //    for(int i = 0; i < 25; i++)
-            //    {
-            //        Console.WriteLine($"Light for {lightTimeInMilliseconds}ms");
-            //        controller.Write(pin, PinValue.High);
-            //        Thread.Sleep(lightTimeInMilliseconds);
-            //        Console.WriteLine($"Dim for {dimTimeInMilliseconds}ms");
-            //        controller.Write(pin, PinValue.Low);
-            //        Thread.Sleep(dimTimeInMilliseconds);
-            //    }
-            //}
-
             Console.WriteLine("Setting up I2C and PWM Controller...");
             I2cConnectionSettings settings = new I2cConnectionSettings(1, 0x60);
             using (UnixI2cDevice device = new UnixI2cDevice(settings))
@@ -57,7 +31,7 @@ namespace CarController
                 Console.WriteLine("Running all motors...");
                 foreach (IMotor m in motors)
                 {
-                    m.SetDirection(MotorMode.Foreward);
+                    m.SetDirection(MotorMode.Forward);
                     for (int i = 0; i < 50; i++)
                     {
                         m.SetSpeed(i * 0.02);
